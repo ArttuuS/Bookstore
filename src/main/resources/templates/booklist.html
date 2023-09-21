@@ -4,11 +4,12 @@
 <head>
     <title>Booklist</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 
 <body>
     <h1>Books</h1>
-    <table>
+    <table class="table table-striped">
         <tr>
             <th>Title</th>
             <th>Author</th>
@@ -29,7 +30,7 @@
             </td>
         </tr>
     </table>
-    <a href="/add" class="btn btn-primary">Add Book</a>
+    <a href="/add" class="btn btn-success">Add Book</a>
 </body>
 
 </html>
