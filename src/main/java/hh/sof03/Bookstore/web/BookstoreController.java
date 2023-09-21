@@ -1,29 +1,42 @@
 package hh.sof03.Bookstore.web;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import hh.sof03.Bookstore.domain.Book;
+import hh.sof03.Bookstore.domain.BookRepository;
 
 @Controller
 public class BookstoreController {
+	@Autowired
+	private BookRepository repository;
 
-	@RequestMapping(value = "/index", method = RequestMethod.GET)
-
+	@RequestMapping(value = "/booklist", method = RequestMethod.GET)
 	public String annaKaikkiKirjat(Model model) {
-		List<Book> books = new ArrayList<Book>();
-		books.add(new Book("Harry Potter and the Philosopher's Stone", "J. K. Rowling", 1997, "9781408855652", 23.90));
-		books.add(new Book("To Kill a Mockingbird", "Harper Lee", 1960, "9780061120084", 14.99));
-		books.add(new Book("The Great Gatsby", "F. Scott Fitzgerald", 1925, "9780743273565", 12.95));
-
-		model.addAttribute("books", books);
-
-		return "bookstore";
+		model.addAttribute("books", repository.findAll());
+		return "booklist";
 	}
 
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+	public String deleteBook(@PathVariable("id") Long bookId, Model model) {
+		repository.deleteById(bookId);
+		return "redirect:../booklist";
+	}
+	@RequestMapping(value = "/add")
+	public String addBook(Model model) {
+		model.addAttribute("book", new Book());
+		return "addbook";
+	}
+	
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String save(Book book) {
+		repository.save(book);
+		return "redirect:booklist";
+	}
 }
+
+
