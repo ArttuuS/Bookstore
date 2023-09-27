@@ -34,17 +34,19 @@ public class BookstoreApplication {
 			}
 		};
 	}
+		
+	
 
 	@Bean
-	public CommandLineRunner demo2(CategoryRepository repository) {
+	public CommandLineRunner demo2(CategoryRepository repository2) {
 		return (args) -> {
 			log.info("save a couple of categories");
-			repository.save(new Category(1, "Scifi"));
-			repository.save(new Category(2, "Comedy"));
-			repository.save(new Category(3, "Drama"));
+			repository2.save(new Category(1, "Scifi"));
+			repository2.save(new Category(2, "Comedy"));
+			repository2.save(new Category(3, "Drama"));
 
 			log.info("fetch all categories");
-			for (Category category : repository.findAll()) {
+			for (Category category : repository2.findAll()) {
 				log.info(category.toString());
 			}
 
