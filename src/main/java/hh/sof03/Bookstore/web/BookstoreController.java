@@ -9,13 +9,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import hh.sof03.Bookstore.domain.Book;
 import hh.sof03.Bookstore.domain.BookRepository;
-
+import hh.sof03.Bookstore.domain.CategoryRepository;
 
 @Controller
 public class BookstoreController {
 	@Autowired
 	private BookRepository repository;
 
+	@Autowired
+	private CategoryRepository repository2;
 
 	@RequestMapping(value = "/booklist", method = RequestMethod.GET)
 	public String listBooks(Model model) {
@@ -32,6 +34,7 @@ public class BookstoreController {
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String addBook(Model model) {
 		model.addAttribute("book", new Book());
+		model.addAttribute("categories", repository2.findAll());
 		return "addbook";
 	}
 
@@ -40,6 +43,8 @@ public class BookstoreController {
 		Book book = repository.findById(bookId).orElse(null);
 		if (book != null) {
 			model.addAttribute("book", book);
+			model.addAttribute("categories", repository2.findAll());
+
 			return "addbook";
 		} else {
 			return "redirect:/booklist";
@@ -52,4 +57,3 @@ public class BookstoreController {
 		return "redirect:/booklist";
 	}
 }
-	

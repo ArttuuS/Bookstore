@@ -21,12 +21,17 @@ public class BookstoreApplication {
 	}
 
 	@Bean
-	public CommandLineRunner demo(BookRepository repository) {
+	public CommandLineRunner demo(BookRepository repository, CategoryRepository repository2) {
 		return (args) -> {
 			log.info("save a couple of books");
-			repository.save(new Book("Taru sormusten herrasta", "Kirjailija Kirja", 1998, "1281408565652", 21.90));
-			repository.save(new Book("Esimerkkikirja2", "Risto Matti", 1923, "9781408565652", 89.90));
-			repository.save(new Book("Mahtava kirja", "Leevi Leeviläinen", 2008, "7881408565652", 15.90));
+			
+			repository2.save(new Category("Scifi"));
+			repository2.save(new Category("Comedy"));
+			repository2.save(new Category("Drama"));
+			
+			repository.save(new Book("Taru sormusten herrasta", "Kirjailija Kirja", 1998, "1281408565652", 21.90, repository2.findByName("Scifi").get(0)));
+			repository.save(new Book("Esimerkkikirja2", "Risto Matti", 1923, "9781408565652", 89.90, repository2.findByName("Comedy").get(0)));
+			repository.save(new Book("Mahtava kirja", "Leevi Leeviläinen", 2008, "7881408565652", 15.90, repository2.findByName("Drama").get(0)));
 
 			log.info("fetch all books");
 			for (Book book : repository.findAll()) {
@@ -34,23 +39,5 @@ public class BookstoreApplication {
 			}
 		};
 	}
-		
-	
 
-	@Bean
-	public CommandLineRunner demo2(CategoryRepository repository2) {
-		return (args) -> {
-			log.info("save a couple of categories");
-			repository2.save(new Category(1, "Scifi"));
-			repository2.save(new Category(2, "Comedy"));
-			repository2.save(new Category(3, "Drama"));
-
-			log.info("fetch all categories");
-			for (Category category : repository2.findAll()) {
-				log.info(category.toString());
-			}
-
-		};
-
-	}
 }

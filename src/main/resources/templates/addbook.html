@@ -33,6 +33,12 @@
                 <label for="price">Price</label>
                 <input type="text" id="price" th:field="*{price}" class="form-control" />
                 <div style="clear: both; display: block; height: 10px;"></div>
+                
+                 <label for="category">Category</label>
+                <select id="category" th:field="*{category}" class="form-control">
+                <option th:each="category: ${categories}" th:value="${category.categoryid}" th:text="${category.name}"></option>/option>
+                </select>
+                <div style="clear: both; display: block; height: 10px;"></div>
 
                 
                 <input type="submit" class="btn btn-primary" th:value="${book.id == null ? 'Add Book' : 'Update Book'}" />
