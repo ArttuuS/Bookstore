@@ -79,4 +79,9 @@ public class BookstoreController {
 		repository.save(book);
 		return "redirect:/booklist";
 	}
+
+	@RequestMapping(value = "/login")
+	public String login() {
+		return "login";
+	}
 }
